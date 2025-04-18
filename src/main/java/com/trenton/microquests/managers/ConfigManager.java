@@ -1,7 +1,7 @@
 package com.trenton.microquests.managers;
 
+import com.trenton.coreapi.api.ManagerBase;
 import com.trenton.microquests.MicroQuests;
-import com.trenton.microquests.interfaces.ManagerBase;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -21,7 +21,6 @@ public class ConfigManager implements ManagerBase {
     private FileConfiguration optOutConfig;
     private Set<UUID> optOut;
 
-    // Validated lists for quests
     private List<EntityType> validKillMobs;
     private List<Material> validGatherItems;
     private List<Material> validCraftItems;

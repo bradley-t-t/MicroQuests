@@ -1,30 +1,39 @@
 package com.trenton.microquests;
 
-import com.trenton.microquests.interfaces.CommandBase;
-import com.trenton.microquests.interfaces.ListenerBase;
-import com.trenton.microquests.interfaces.ManagerBase;
-import com.trenton.microquests.managers.ConfigManager;
+import com.trenton.coreapi.api.PluginInitializer;
 import com.trenton.microquests.managers.CompetitionManager;
+import com.trenton.microquests.managers.ConfigManager;
 import com.trenton.microquests.managers.RewardManager;
-import com.trenton.microquests.updater.UpdateChecker;
-import com.trenton.microquests.utils.ReflectionUtils;
+import com.trenton.updater.api.UpdaterImpl;
+import com.trenton.updater.api.UpdaterService;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.List;
 
 public final class MicroQuests extends JavaPlugin {
-    private List<ManagerBase> managers;
-    private List<CommandBase> commands;
-    private List<ListenerBase> listeners;
     private ConfigManager configManager;
     private RewardManager rewardManager;
     private CompetitionManager competitionManager;
-    private UpdateChecker updateChecker;
+    private UpdaterService updater;
+    private PluginInitializer initializer;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        setupFiles();
+        initialize();
+        setupUpdater();
+        setupMetrics();
+    }
+
+    public void initialize() {
+        String packageName = getClass().getPackageName();
+        initializer = new PluginInitializer(this, packageName);
+        initializer.initialize();
+    }
+
+    private void setupFiles() {
         File messagesFile = new File(getDataFolder(), "messages.yml");
         if (!messagesFile.exists()) {
             saveResource("messages.yml", false);
@@ -33,37 +42,26 @@ public final class MicroQuests extends JavaPlugin {
         if (!questsFile.exists()) {
             saveResource("quests.yml", false);
         }
+    }
 
-        String packageName = getClass().getPackageName();
-        managers = ReflectionUtils.initializeClasses(this, packageName, ManagerBase.class);
-        commands = ReflectionUtils.initializeClasses(this, packageName, CommandBase.class);
-        listeners = ReflectionUtils.initializeClasses(this, packageName, ListenerBase.class);
-
-        for (ManagerBase manager : managers) {
-            if (manager instanceof ConfigManager) {
-                configManager = (ConfigManager) manager;
-            } else if (manager instanceof RewardManager) {
-                rewardManager = (RewardManager) manager;
-            } else if (manager instanceof CompetitionManager) {
-                competitionManager = (CompetitionManager) manager;
-            }
-        }
-
-        managers.forEach(m -> m.init(this));
-        commands.forEach(c -> c.register(this));
-        listeners.forEach(l -> l.register(this));
-
-        updateChecker = new UpdateChecker(this,124181);
+    public void setupUpdater() {
+        updater = new UpdaterImpl(this, 124181); // SpigotMC resource ID for MicroQuests
         boolean autoUpdate = getConfig().getBoolean("auto_updater.enabled", true);
-        updateChecker.checkForUpdates(autoUpdate);
+        updater.checkForUpdates(autoUpdate);
+    }
 
-        new MetricsHandler(this);
+    public void setupMetrics() {
+        new Metrics(this, 25514);
     }
 
     @Override
     public void onDisable() {
-        // Shutdown managers
-        managers.forEach(ManagerBase::shutdown);
+        if (initializer != null) {
+            initializer.shutdown();
+        }
+        if (updater != null) {
+            updater.handleUpdateOnShutdown();
+        }
     }
 
     public ConfigManager getConfigManager() {

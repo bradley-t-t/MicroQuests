@@ -1,10 +1,10 @@
 package com.trenton.microquests.commands;
 
+import com.trenton.coreapi.api.CommandBase;
+import com.trenton.coreapi.util.MessageUtils;
 import com.trenton.microquests.MicroQuests;
 import com.trenton.microquests.competition.Competition;
-import com.trenton.microquests.interfaces.CommandBase;
 import com.trenton.microquests.managers.ConfigManager;
-import com.trenton.microquests.utils.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,12 +38,12 @@ public class QuestCommand implements CommandBase, CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
-            MessageUtils.sendMessage(plugin, sender, "command-player-only");
+            MessageUtils.sendMessage(plugin, configManager.getMessages(), sender, "command-player-only");
             return true;
         }
 
         if (args.length == 0) {
-            MessageUtils.sendMessage(plugin, player, "command-invalid-usage");
+            MessageUtils.sendMessage(plugin, configManager.getMessages(), player, "command-invalid-usage");
             return true;
         }
 
@@ -51,25 +51,25 @@ public class QuestCommand implements CommandBase, CommandExecutor {
             case "optout":
                 if (optOut.contains(player.getUniqueId())) {
                     optOut.remove(player.getUniqueId());
-                    MessageUtils.sendMessage(plugin, player, "optout-disabled");
+                    MessageUtils.sendMessage(plugin, configManager.getMessages(), player, "optout-disabled");
                 } else {
                     optOut.add(player.getUniqueId());
-                    MessageUtils.sendMessage(plugin, player, "optout-enabled");
+                    MessageUtils.sendMessage(plugin, configManager.getMessages(), player, "optout-enabled");
                 }
                 configManager.saveOptOut();
                 return true;
             case "status":
                 Competition comp = plugin.getCompetitionManager().getActiveCompetition();
                 if (comp == null || !comp.isActive()) {
-                    MessageUtils.sendMessage(plugin, player, "status-no-competition");
+                    MessageUtils.sendMessage(plugin, configManager.getMessages(), player, "status-no-competition");
                 } else {
                     long timeLeft = plugin.getConfig().getLong("max-quest-time") -
                             (System.currentTimeMillis() - comp.getStartTime()) / 1000;
-                    MessageUtils.sendMessage(plugin, player, "status-active", comp.getQuest(), (int) timeLeft);
+                    MessageUtils.sendMessage(plugin, configManager.getMessages(), player, "status-active", comp.getQuest(), (int) timeLeft);
                 }
                 return true;
             default:
-                MessageUtils.sendMessage(plugin, player, "command-invalid-usage");
+                MessageUtils.sendMessage(plugin, configManager.getMessages(), player, "command-invalid-usage");
                 return true;
         }
     }

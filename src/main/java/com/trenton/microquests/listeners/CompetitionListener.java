@@ -1,7 +1,7 @@
 package com.trenton.microquests.listeners;
 
+import com.trenton.coreapi.api.ListenerBase;
 import com.trenton.microquests.MicroQuests;
-import com.trenton.microquests.interfaces.ListenerBase;
 import com.trenton.microquests.competition.Competition;
 import com.trenton.microquests.competition.quests.CraftQuest;
 import com.trenton.microquests.competition.quests.GatherQuest;
@@ -13,8 +13,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
@@ -35,7 +35,8 @@ public class CompetitionListener implements ListenerBase, Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
-        if (!(event.getEntity().getKiller() instanceof Player player)) return;
+        if (!(event.getEntity().getKiller() instanceof Player)) return;
+        Player player = (Player) event.getEntity().getKiller();
         if (optOut.contains(player.getUniqueId())) return;
 
         Competition comp = plugin.getCompetitionManager().getActiveCompetition();

@@ -1,8 +1,8 @@
 package com.trenton.microquests.competition;
 
+import com.trenton.coreapi.util.MessageUtils;
 import com.trenton.microquests.MicroQuests;
 import com.trenton.microquests.competition.quests.Quest;
-import com.trenton.microquests.utils.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -28,8 +28,8 @@ public class Competition {
 
     public void start() {
         active = true;
-        MessageUtils.broadcast(plugin, "competition-start", quest);
-        MessageUtils.sendTitle(plugin, "competition-start-title", "competition-start-subtitle", quest);
+        MessageUtils.broadcast(plugin, plugin.getConfigManager().getMessages(), "competition-start", quest);
+        MessageUtils.sendTitle(plugin, plugin.getConfigManager().getMessages(), "competition-start-title", "competition-start-subtitle", quest);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -42,11 +42,11 @@ public class Competition {
         if (!active) return;
         active = false;
         if (winner != null) {
-            MessageUtils.broadcast(plugin, "competition-win", quest, winner);
-            MessageUtils.sendTitle(plugin, "competition-win-title", "competition-win-subtitle", quest, winner);
+            MessageUtils.broadcast(plugin, plugin.getConfigManager().getMessages(), "competition-win", quest, winner);
+            MessageUtils.sendTitle(plugin, plugin.getConfigManager().getMessages(), "competition-win-title", "competition-win-subtitle", quest, winner);
             plugin.getRewardManager().rewardWinner(winner, quest);
         } else {
-            MessageUtils.broadcast(plugin, "competition-expired");
+            MessageUtils.broadcast(plugin, plugin.getConfigManager().getMessages(), "competition-expired");
         }
         progress.clear();
     }
@@ -64,7 +64,7 @@ public class Competition {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) return;
         progress.merge(uuid, 1, Integer::sum);
-        MessageUtils.sendActionBar(plugin, player, "progress-update", quest, progress.get(uuid));
+        MessageUtils.sendActionBar(plugin, plugin.getConfigManager().getMessages(), player, "progress-update", quest, progress.get(uuid));
         if (progress.get(uuid) >= quest.getAmount()) {
             end(player);
         }

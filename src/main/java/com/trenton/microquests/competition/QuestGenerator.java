@@ -1,12 +1,12 @@
 package com.trenton.microquests.competition;
 
+import com.trenton.coreapi.util.MessageUtils;
 import com.trenton.microquests.MicroQuests;
 import com.trenton.microquests.competition.quests.CraftQuest;
 import com.trenton.microquests.competition.quests.GatherQuest;
 import com.trenton.microquests.competition.quests.KillQuest;
 import com.trenton.microquests.competition.quests.Quest;
 import com.trenton.microquests.managers.ConfigManager;
-import com.trenton.microquests.utils.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -45,14 +45,14 @@ public class QuestGenerator {
         if (underground) {
             if (possibleTypes.contains("kill")) {
                 weightedTypes.add("kill");
-                weightedTypes.add("kill"); // Higher chance for kill quests underground
+                weightedTypes.add("kill");
             }
             if (possibleTypes.contains("gather")) weightedTypes.add("gather");
             if (possibleTypes.contains("craft")) weightedTypes.add("craft");
         } else {
             if (possibleTypes.contains("gather")) {
                 weightedTypes.add("gather");
-                weightedTypes.add("gather"); // Higher chance for gather quests on surface
+                weightedTypes.add("gather");
             }
             if (possibleTypes.contains("craft")) weightedTypes.add("craft");
             if (possibleTypes.contains("kill")) weightedTypes.add("kill");

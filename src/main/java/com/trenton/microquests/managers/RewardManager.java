@@ -1,8 +1,8 @@
 package com.trenton.microquests.managers;
 
+import com.trenton.coreapi.api.ManagerBase;
 import com.trenton.microquests.MicroQuests;
 import com.trenton.microquests.competition.quests.Quest;
-import com.trenton.microquests.interfaces.ManagerBase;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -58,7 +58,6 @@ public class RewardManager implements ManagerBase {
                 plugin.getLogger().info("Gave " + xp + " XP to " + player.getName());
             }
 
-            // Items
             List<?> itemList = plugin.getConfig().getList("rewards.fallback.items", List.of());
             for (Object obj : itemList) {
                 if (obj instanceof java.util.Map) {
@@ -73,7 +72,6 @@ public class RewardManager implements ManagerBase {
                 }
             }
 
-            // Buffs
             List<?> buffList = plugin.getConfig().getList("rewards.fallback.buffs", List.of());
             for (Object obj : buffList) {
                 if (obj instanceof java.util.Map) {
