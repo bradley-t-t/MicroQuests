@@ -32,10 +32,8 @@ public class RewardManager implements ManagerBase {
     public void rewardWinner(Player player, Quest quest) {
         boolean commandsExecuted = false;
 
-        // Execute victory commands
         for (String cmd : victoryCommands) {
             try {
-                // Remove leading slash if present
                 if (cmd.startsWith("/")) {
                     cmd = cmd.substring(1);
                 }
@@ -50,7 +48,6 @@ public class RewardManager implements ManagerBase {
             }
         }
 
-        // Fallback rewards if no commands were executed successfully
         if (!commandsExecuted) {
             plugin.getLogger().info("No valid victory commands executed for " + player.getName() + ", applying fallback rewards");
             // XP

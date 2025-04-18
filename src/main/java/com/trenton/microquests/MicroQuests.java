@@ -24,7 +24,6 @@ public final class MicroQuests extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Save default config, messages, and quests only if they don't exist
         saveDefaultConfig();
         File messagesFile = new File(getDataFolder(), "messages.yml");
         if (!messagesFile.exists()) {
@@ -35,13 +34,11 @@ public final class MicroQuests extends JavaPlugin {
             saveResource("quests.yml", false);
         }
 
-        // Initialize components via reflection
         String packageName = getClass().getPackageName();
         managers = ReflectionUtils.initializeClasses(this, packageName, ManagerBase.class);
         commands = ReflectionUtils.initializeClasses(this, packageName, CommandBase.class);
         listeners = ReflectionUtils.initializeClasses(this, packageName, ListenerBase.class);
 
-        // Assign specific managers
         for (ManagerBase manager : managers) {
             if (manager instanceof ConfigManager) {
                 configManager = (ConfigManager) manager;
@@ -52,7 +49,6 @@ public final class MicroQuests extends JavaPlugin {
             }
         }
 
-        // Register components
         managers.forEach(m -> m.init(this));
         commands.forEach(c -> c.register(this));
         listeners.forEach(l -> l.register(this));
@@ -61,7 +57,6 @@ public final class MicroQuests extends JavaPlugin {
         boolean autoUpdate = getConfig().getBoolean("auto_updater.enabled", true);
         updateChecker.checkForUpdates(autoUpdate);
 
-        // Initialize bStats metrics
         new MetricsHandler(this);
     }
 

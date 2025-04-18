@@ -6,7 +6,7 @@ import org.bstats.charts.SimplePie;
 public class MetricsHandler {
 
     private final MicroQuests plugin;
-    private final int pluginId = 25514; // Your bStats plugin ID
+    private final int pluginId = 25514;
 
     public MetricsHandler(MicroQuests plugin) {
         this.plugin = plugin;
@@ -16,7 +16,6 @@ public class MetricsHandler {
     private void initializeMetrics() {
         Metrics metrics = new Metrics(plugin, pluginId);
 
-        // Add a custom chart for enabled quest types
         metrics.addCustomChart(new SimplePie("enabled_quest_types", () -> {
             StringBuilder questTypes = new StringBuilder();
             if (plugin.getConfig().getBoolean("quest-types.kill", false)) {

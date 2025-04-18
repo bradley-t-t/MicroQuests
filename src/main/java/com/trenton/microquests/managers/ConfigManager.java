@@ -40,8 +40,6 @@ public class ConfigManager implements ManagerBase {
                 optOut.add(UUID.fromString(uuid));
             }
         }
-
-        // Validate and load quest configurations
         validateQuestConfigs();
     }
 

@@ -31,7 +31,6 @@ public class QuestGenerator {
         List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
         boolean underground = players.stream().anyMatch(p -> p.getLocation().getY() < 50);
 
-        // Determine possible quest types based on configurations
         List<String> possibleTypes = new ArrayList<>();
         if (!configManager.getValidKillMobs().isEmpty()) possibleTypes.add("kill");
         if (!configManager.getValidGatherItems().isEmpty()) possibleTypes.add("gather");
@@ -42,7 +41,6 @@ public class QuestGenerator {
             return null;
         }
 
-        // Weight quest types based on context
         List<String> weightedTypes = new ArrayList<>();
         if (underground) {
             if (possibleTypes.contains("kill")) {
@@ -65,10 +63,8 @@ public class QuestGenerator {
             return null;
         }
 
-        // Select a random quest type from weighted list
         String type = weightedTypes.get(random.nextInt(weightedTypes.size()));
 
-        // Generate quest based on type
         switch (type) {
             case "kill":
                 return generateKillQuest();
