@@ -1,0 +1,43 @@
+# Time between competitions (in seconds, e.g., 900 = 15 minutes)
+interval: 900
+
+# Minimum number of online players to start a competition
+min-players: 3
+
+# Maximum duration of a competition (in seconds, e.g., 300 = 5 minutes)
+max-quest-time: 300
+
+# Enabled quest types
+quest-types:
+  kill: true
+  gather: true
+  craft: true
+
+# Reward configuration
+rewards:
+  # Commands to execute when a player wins (placeholders: {player}, {quest}, {amount})
+  on-victory:
+    - "/give {player} diamond 5"
+    - "/effect give {player} minecraft:speed 60 1"
+  # Fallback rewards if no victory commands are specified
+  fallback:
+    xp: 10-20
+    items:
+      - material: EMERALD
+        amount: 1-5
+      - material: IRON_INGOT
+        amount: 2-7
+      - material: DIAMOND
+        amount: 1-2
+    buffs:
+      - effect: SPEED
+        duration: 60 # Seconds
+        amplifier: 1
+      - effect: STRENGTH
+        duration: 30
+        amplifier: 1
+
+# Auto-updater configuration
+auto_updater:
+  enabled: true
+  notify_permission: microquests.update.notify

@@ -1,0 +1,34 @@
+# Messages for MicroQuests (use & for colors: &a=green, &e=yellow, &6=gold, etc.)
+# Placeholders: {player}, {quest}, {amount}, {progress}, {time}
+
+# Quest start announcement (chat)
+competition-start: "&6[MicroQuests] &eA new quest has begun! First to &f{quest} &ewins!"
+
+# Quest start title (set empty to disable)
+competition-start-title: "&eQuest: {quest}"
+competition-start-subtitle: "&7Be the first to complete it!"
+
+# Progress update (action bar)
+progress-update: "&aProgress on {quest}: &f{progress}&a/&f{amount}"
+
+# Quest win announcement
+competition-win: "&6[MicroQuests] &e{player} completed the quest: &f{quest}&e!"
+
+# Quest win title
+competition-win-title: "&6{player} Triumphs!"
+competition-win-subtitle: "&eCompleted: {quest}"
+
+# Quest expired
+competition-expired: "&6[MicroQuests] &cThe quest has ended with no winner."
+
+# Opt-out messages
+optout-enabled: "&aYou have opted out of MicroQuests competitions."
+optout-disabled: "&aYou are now participating in MicroQuests competitions."
+
+# Status messages
+status-no-competition: "&7No quest is currently active."
+status-active: "&eActive quest: &f{quest} &e(Time remaining: &f{time}&es)"
+
+# Command errors
+command-player-only: "&cThis command is for players only."
+command-invalid-usage: "&cUsage: /quest [optout|status]"
