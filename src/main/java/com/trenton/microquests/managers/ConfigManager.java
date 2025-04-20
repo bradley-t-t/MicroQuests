@@ -1,18 +1,18 @@
 package com.trenton.microquests.managers;
 
-import com.trenton.coreapi.api.ManagerBase;
+import com.trenton.coreapi.annotations.CoreManager;
 import com.trenton.microquests.MicroQuests;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
-import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class ConfigManager implements ManagerBase {
+@CoreManager(name = "ConfigManager")
+public class ConfigManager {
     private MicroQuests plugin;
     private FileConfiguration config;
     private FileConfiguration messages;
@@ -25,11 +25,10 @@ public class ConfigManager implements ManagerBase {
     private List<Material> validGatherItems;
     private List<Material> validCraftItems;
 
-    @Override
-    public void init(Plugin plugin) {
-        this.plugin = (MicroQuests) plugin;
+    public void init(MicroQuests plugin) {
+        this.plugin = plugin;
         this.config = plugin.getConfig();
-        this.messages = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "messages.yml"));
+        this.messages = plugin.getCoreAPI().getMessages();
         this.questsConfig = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "quests.yml"));
         this.optOutFile = new File(plugin.getDataFolder(), "optout.yml");
         this.optOutConfig = YamlConfiguration.loadConfiguration(optOutFile);
@@ -42,7 +41,6 @@ public class ConfigManager implements ManagerBase {
         validateQuestConfigs();
     }
 
-    @Override
     public void shutdown() {
         saveOptOut();
     }

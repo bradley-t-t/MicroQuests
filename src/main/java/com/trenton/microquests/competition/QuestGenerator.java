@@ -23,7 +23,7 @@ public class QuestGenerator {
 
     public QuestGenerator(MicroQuests plugin) {
         this.plugin = plugin;
-        this.configManager = plugin.getConfigManager();
+        this.configManager = (ConfigManager) plugin.getCoreAPI().getManager("ConfigManager");
         this.random = new Random();
     }
 
