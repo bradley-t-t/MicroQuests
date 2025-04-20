@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.trenton</groupId>
     <artifactId>MicroQuests</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
     <packaging>jar</packaging>
     <name>MicroQuests</name>
     <description>Spigot plugin for micro quests and competitions</description>

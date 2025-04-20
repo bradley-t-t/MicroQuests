@@ -1,27 +1,25 @@
 package com.trenton.microquests.managers;
 
-import com.trenton.coreapi.api.ManagerBase;
+import com.trenton.coreapi.annotations.CoreManager;
 import com.trenton.microquests.MicroQuests;
 import com.trenton.microquests.competition.Competition;
 import com.trenton.microquests.competition.QuestGenerator;
 import com.trenton.microquests.managers.ConfigManager;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class CompetitionManager implements ManagerBase {
+@CoreManager(name = "CompetitionManager")
+public class CompetitionManager {
     private MicroQuests plugin;
     private Competition activeCompetition;
     private ConfigManager configManager;
 
-    @Override
-    public void init(Plugin plugin) {
-        this.plugin = (MicroQuests) plugin;
-        this.configManager = this.plugin.getConfigManager();
+    public void init(MicroQuests plugin) {
+        this.plugin = plugin;
+        this.configManager = (ConfigManager) plugin.getCoreAPI().getManager("ConfigManager");
         startInterval();
     }
 
-    @Override
     public void shutdown() {
         if (activeCompetition != null && activeCompetition.isActive()) {
             activeCompetition.end(null);
@@ -34,7 +32,7 @@ public class CompetitionManager implements ManagerBase {
             public void run() {
                 ConfigManager localConfigManager = configManager;
                 if (localConfigManager == null) {
-                    localConfigManager = plugin.getConfigManager();
+                    localConfigManager = (ConfigManager) plugin.getCoreAPI().getManager("ConfigManager");
                     if (localConfigManager == null) {
                         plugin.getLogger().warning("ConfigManager is null in CompetitionManager task. Skipping execution.");
                         return;

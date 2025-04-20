@@ -2,7 +2,7 @@
 # Placeholders: {player}, {quest}, {amount}, {progress}, {time}
 
 # Quest start announcement (chat)
-competition-start: "&6[MicroQuests] &eA new quest has begun! First to &f{quest} &ewins!"
+competition-start: "&eA new quest has begun! First to &f{quest} &ewins!"
 
 # Quest start title (set empty to disable)
 competition-start-title: "&eQuest: {quest}"
@@ -12,18 +12,18 @@ competition-start-subtitle: "&7Be the first to complete it!"
 progress-update: "&aProgress on {quest}: &f{progress}&a/&f{amount}"
 
 # Quest win announcement
-competition-win: "&6[MicroQuests] &e{player} completed the quest: &f{quest}&e!"
+competition-win: "&a{player} completed the quest: &f{quest}&a!"
 
 # Quest win title
 competition-win-title: "&6{player} Triumphs!"
 competition-win-subtitle: "&eCompleted: {quest}"
 
 # Quest expired
-competition-expired: "&6[MicroQuests] &cThe quest has ended with no winner."
+competition-expired: "&cThe quest has ended with no winner."
 
 # Opt-out messages
-optout-enabled: "&aYou have opted out of MicroQuests competitions."
-optout-disabled: "&aYou are now participating in MicroQuests competitions."
+optout-enabled: "&aYou have opted out of quest competitions."
+optout-disabled: "&aYou are now participating in quest competitions."
 
 # Status messages
 status-no-competition: "&7No quest is currently active."
